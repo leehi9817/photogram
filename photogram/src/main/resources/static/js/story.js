@@ -53,11 +53,11 @@ function getStoryItem(image) {
 					item += `<i class="far fa-heart" id="storyLikeIcon-${image.id}" onclick="toggleLike(${image.id})"></i>`;
 				}
 			
-			item += `
+		item += `
 			</button>
 		</div>
 
-		<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>
+		<span class="like"><b id="storyLikeCount-${image.id}">${image.likeCount} </b>likes</span>
 
 		<div class="sl__item__contents__content">
 			<p>${image.caption}</p>
@@ -98,7 +98,7 @@ $(window).scroll(() => {
 	let checkNum = $(window).scrollTop() - ($(document).height() - $(window).height());
 	// console.log(checkNum);
 	
-	if (checkNum < 10 && checkNum > -10) {
+	if (checkNum < 1 && checkNum > -1) {
 		page++;
 		storyLoad();
 	}

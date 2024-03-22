@@ -32,6 +32,8 @@ public class ImageService {
 		// images에 좋아요 상태 담기
 		images.forEach((image) -> {
 			
+			image.setLikeCount(image.getLikes().size());
+			
 			image.getLikes().forEach((like) -> {
 				if (like.getUser().getId() == principalId) {
 					// 해당 이미지에 좋아요한 사람을 찾아서 
