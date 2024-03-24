@@ -1,6 +1,5 @@
 package com.cos.photogramstart.web.api;
 
-import java.security.Provider.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,21 +53,12 @@ public class UserApiController {
 	
 	@PutMapping("/api/user/{id}")
 	public CMRespDto<?> update(@PathVariable int id,
-			@Valid UserUpdateDto userUpdateDto,
-			BindingResult bindingResult, // @Valid의 다음 파라미터에 적어야함
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		@Valid UserUpdateDto userUpdateDto,
+		BindingResult bindingResult, // @Valid의 다음 파라미터에 적어야함
+		@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error:bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationApiException("유효성 검사 실패함",errorMap);
-		} else {
-			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
-			principalDetails.setUser(userEntity); // 세션 정보 변경
-			return new CMRespDto<>(1,"회원수정완료",userEntity); // 응답시 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
-		}		
+		User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
+		principalDetails.setUser(userEntity); // 세션 정보 변경
+		return new CMRespDto<>(1,"회원수정완료",userEntity); // 응답시 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.		
 	}
 }
